@@ -12,11 +12,12 @@ import (
 )
 
 type Config struct {
-	Primary  Primary        `koanf:"primary" validate:"required"`
-	Server   ServerConfig   `koanf:"server" validate:"required"`
-	Database DatabaseConfig `koanf:"database" validate:"required"`
-	Auth     AuthConfig     `koanf:"auth" validate:"required"`
-	Redis    RedisConfig    `koanf:"redis" validate:"required"`
+	Primary       Primary              `koanf:"primary" validate:"required"`
+	Server        ServerConfig         `koanf:"server" validate:"required"`
+	Database      DatabaseConfig       `koanf:"database" validate:"required"`
+	Auth          AuthConfig           `koanf:"auth" validate:"required"`
+	Redis         RedisConfig          `koanf:"redis" validate:"required"`
+	Observability *ObservabilityConfig `koanf:"observability"`
 }
 
 type Primary struct {
@@ -76,6 +77,20 @@ func LoadConfig() (*Config, error) {
 	err = validate.Struct(mainConfig)
 	if err != nil {
 		logger.Fatal().Err(err).Msg("config validation failed")
+	}
+
+	// set default observability config if not provided
+	if mainConfig.Observability == nil {
+		mainConfig.Observability = DefaultObservabilityConfig()
+	}
+
+	// Override service name and environment from primary config
+	mainConfig.Observability.ServiceName = "boilerplate"
+	mainConfig.Observability.Environment = mainConfig.Primary.Env
+
+	// validate observability config
+	if err := mainConfig.Observability.Validate(); err != nil {
+		logger.Fatal().Err(err).Msg("Invalid observability config")
 	}
 	return mainConfig, nil
 }
