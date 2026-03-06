@@ -1,0 +1,28 @@
+{
+  "name": "@boilerplate/emails",
+  "version": "1.0.0",
+  "description": "Package to manage emails",
+  "type": "module",
+  "scripts": {
+    "dev": "bunx --bun react-email dev --dir ./src/templates -p 3001",
+    "export": "bunx --bun react-email export --pretty --dir ./src/templates --outDir ../../backend/templates/emails",
+    "build": "bun run export",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@react-email/components": "0.0.34",
+    "@react-email/render": "^1.4.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-email": "4.0.2"
+  },
+  "devDependencies": {
+    "@react-email/preview-server": "^5.2.9",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "typescript": "^5.9.3"
+  }
+}
