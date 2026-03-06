@@ -23,6 +23,11 @@ tasks:
     cmds:
     - go run ./cmd/go-boilerplate
 
+  dev:
+    desc: run the local development server
+    cmds:
+    - task run
+
   migrations:new:
     desc: create a new database migration
     vars:
