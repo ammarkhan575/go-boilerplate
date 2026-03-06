@@ -55,7 +55,7 @@ type IntegrationConfig struct {
 }
 
 type AuthConfig struct {
-	Secretkey string `koanf:"secret_key" validate:"required"`
+	SecretKey string `koanf:"secret_key" validate:"required"`
 }
 
 func LoadConfig() (*Config, error) {
